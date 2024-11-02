@@ -11,7 +11,7 @@ OWN_PASSWORD = os.getenv("password")
 
 app = Flask(__name__)
 
-response = requests.get("https://api.npoint.io/9f4e46dc9c1d55855234")
+response = requests.get("https://api.npoint.io/623d7162a61d571db725")
 posts = response.json()
 
 

@@ -8,8 +8,12 @@
                 <div class="post-heading">
                     <h1>{{ post.title }}</h1>
                     <h2 class="subheading">{{ post.subtitle }}</h2>
-                    <span class="meta">Posted by
-                        Navid Zaman Khan on 2024
+                    <span class="meta">
+                        <p class="post-meta">
+                            Posted by
+                            <a href="https://www.linkedin.com/in/navid-zaman-khan/">{{ post.author }}</a>
+                            on {{ post.date }}
+                        </p>
                     </span>
                 </div>
             </div>
