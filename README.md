@@ -3,7 +3,7 @@
 Welcome to **Mind Scribbles** — a simple, classy blog where I share my thoughts, ideas, and perspectives. Designed to be clean and distraction-free, this project is my take on creating a personal blogging space with elegance and simplicity.
 
 ### Live Demo🌐
-Check out the live version of **Mind Scribbles** here: [mind-scribbles.onrender.com](https://mind-scribbles.onrender.com/)
+Check out the live version of **Mind Scribbles** here: https://mind-scribbles.onrender.com/
 
 ## About the Project🧠
 **Mind Scribbles** is a minimalistic blogging platform that emphasizes readability and style. Created for those who appreciate a clutter-free reading experience, the website is a space for sharing content on topics that inspire curiosity or warrant a deep dive. From casual musings to well-researched pieces, **Mind Scribbles** brings words to life in an elegant format.
