@@ -15,32 +15,7 @@ Check out the live version of **Mind Scribbles** here: [mind-scribbles.onrender.
 - **Other Tools**: Jinja2 for templating in Flask
 
 ## Getting Started🚀
-
-To run **Mind Scribbles** locally, follow these steps:
-
-1. **Clone the Repo**:
-   ```bash
-   git clone https://github.com/NavidZamanKhan/Mind-Scribbles.git
-   cd Mind-Scribbles
-   ```
-
-2. **Set Up Virtual Environment**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   ```
-
-3. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Run the Application**:
-   ```bash
-   flask run
-   ```
-
-   Access the app locally at `http://127.0.0.1:5000`.
+Note: This is a personal project, intended for educational and personal sharing purposes only. Unauthorized duplication or commercial use is not permitted.
 
 ## Contributing 🤝
 **Mind Scribbles** is a personal project, but feedback and contributions are welcome! Feel free to open an issue or submit a pull request with suggestions or improvements.
