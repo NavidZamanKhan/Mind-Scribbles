@@ -22,3 +22,6 @@ Note: This is a personal project, intended for educational and personal sharing 
 
 ## License 📜
 This project is open-source under the MIT License.
+
+# NEW UPDATE IS COMING VERY SOON.
+## STAY TUNED.
