@@ -25,13 +25,12 @@
                     <h2 class="post-title">{{ post.title }}</h2>
                     <h3 class="post-subtitle">{{ post.subtitle }}</h3>
                 </a>
-                <!-- Post metadata -->
                 <p class="post-meta">
                     Posted by
-                    <a href="https://www.linkedin.com/in/navid-zaman-khan/">{{ post.author }}</a>
-                    on {{ post.date }}
+                    <a href="#">{{post.author}}</a>
+                    on {{post.date}}
+                    <a href="{{url_for('delete_post', post_id=post.id) }}">✘</a>
                 </p>
-            </div>
             <!-- Divider-->
             <hr class="my-4" />
             {% endfor %}
