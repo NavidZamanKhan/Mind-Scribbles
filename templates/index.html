@@ -1,54 +1,65 @@
 {% include "header.html" %}
-    <!-- Page Header-->
-    <header class="masthead" style="background-image: url('../static/assets/img/book.jpg')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <div class="site-heading">
-                        <h1>Mind Scribbles</h1>
-                        <span class="subheading">Thoughts, Ideas, and All the Random In-Betweens</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- Main Content-->
-    <div class="container px-4 px-lg-5">
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('../static/assets/img/book.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-    
-                <!-- Post preview-->
-                {% for post in all_posts %}
-                <div class="post-preview">
-                    <a href="{{ url_for('show_post', index=post.id) }}">
-                        <h2 class="post-title">{{ post.title }}</h2>
-                        <h3 class="post-subtitle">{{ post.subtitle }}</h3>
-                    </a>
-                    <p class="post-meta">
-                        Posted by
-                        <a href="https://www.linkedin.com/in/navid-zaman-khan/">{{ post.author }}</a>
-                        on {{ post.date }}
-                    </p>
+                <div class="site-heading">
+                    <h1>Mind Scribbles</h1>
+                    <span class="subheading">Thoughts, Ideas, and All the Random In-Betweens</span>
                 </div>
-                <!-- Divider-->
-                <hr class="my-4" />
-                {% endfor %}
-    
-                <!-- Pager-->
             </div>
         </div>
     </div>
+</header>
+
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+            {% for post in all_posts %}
+            <div class="post-preview">
+                <a href="{{ url_for('show_post', index=post.id) }}">
+                    <h2 class="post-title">{{ post.title }}</h2>
+                    <h3 class="post-subtitle">{{ post.subtitle }}</h3>
+                </a>
+                <!-- Post metadata -->
+                <p class="post-meta">
+                    Posted by
+                    <a href="https://www.linkedin.com/in/navid-zaman-khan/">{{ post.author }}</a>
+                    on {{ post.date }}
+                </p>
+            </div>
+            <!-- Divider-->
+            <hr class="my-4" />
+            {% endfor %}
+
+            <!-- New Post -->
+            <div class="d-flex justify-content-end mb-4">
+                <a class="btn btn-primary float-right" href="TODO: add code to add_new_post here">
+                    Create New Post
+                </a>
+            </div>
+
+            <!-- Pager-->
+            <div class="d-flex justify-content-end mb-4">
+                <a class="btn btn-secondary text-uppercase" href="#!">Older Posts →</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% include "footer.html" %}
 
-
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
