@@ -241,22 +241,22 @@ def logout():
 def appointment():
     if request.method == "POST":
         data = request.form
-        send_email(
-            data["name"],
-            data["email"],
-            data["phone"],
-            data["message"],
-        )
+        send_email(data["name"], data["email"], data["phone"], data["message"])
         return render_template("contact.html", msg_sent=True)
     return render_template("contact.html", msg_sent=False)
 
 
 def send_email(name, email, phone, message):
     email_message = f"Subject: New Appointment Request\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}"
-    with smtplib.SMTP("smtp.gmail.com", 587) as connection:
-        connection.starttls()
-        connection.login(OWN_EMAIL, OWN_PASSWORD)
-        connection.sendmail(OWN_EMAIL, OWN_EMAIL, email_message)
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+            connection.starttls()
+            connection.login(
+                OWN_EMAIL, OWN_PASSWORD
+            )  # Make sure these are set correctly
+            connection.sendmail(OWN_EMAIL, OWN_EMAIL, email_message)
+    except Exception as e:
+        print(f"Error: {e}")  # Log the error if there's an issue with sending the email
 
 
 if __name__ == "__main__":
