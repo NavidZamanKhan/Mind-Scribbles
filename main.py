@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Flask, render_template, redirect, url_for, flash, abort
+from flask import Flask, render_template, redirect, url_for, flash, abort, request
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
@@ -17,6 +17,14 @@ from sqlalchemy import Integer, String, Text, ForeignKey
 from flask_argon2 import Argon2
 from functools import wraps
 from forms import CreatePostForm, RegisterForm, LoginForm
+import smtplib, os
+from dotenv import load_dotenv
+
+load_dotenv("email.env")
+
+OWN_EMAIL = os.getenv("email")
+OWN_PASSWORD = os.getenv("password")
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "8BYkEfBA6O6donzWlSihBXox7C0sKR6b"
@@ -27,6 +35,18 @@ argon2 = Argon2(app)
 # Initialize Flask-Login
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+# Gravatar setup for profile images in the comment section
+gravatar = Gravatar(
+    app,
+    size=100,
+    rating="g",
+    default="retro",
+    force_default=False,
+    force_lower=False,
+    use_ssl=False,
+    base_url=None,
+)
 
 # Database configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///posts.db"
@@ -92,11 +112,12 @@ def get_all_posts():
     return render_template("index.html", all_posts=posts, current_user=current_user)
 
 
-@app.route("/post/<int:post_id>")
+@app.route("/post/<int:post_id>", methods=["GET"])
 def show_post(post_id):
     requested_post = db.session.get(BlogPost, post_id)
     if not requested_post:
         return abort(404)
+
     return render_template("post.html", post=requested_post, current_user=current_user)
 
 
@@ -214,6 +235,28 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("get_all_posts"))
+
+
+@app.route("/contact", methods=["GET", "POST"])
+def appointment():
+    if request.method == "POST":
+        data = request.form
+        send_email(
+            data["name"],
+            data["email"],
+            data["phone"],
+            data["message"],
+        )
+        return render_template("contact.html", msg_sent=True)
+    return render_template("contact.html", msg_sent=False)
+
+
+def send_email(name, email, phone, message):
+    email_message = f"Subject: New Appointment Request\n\nName: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}"
+    with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+        connection.starttls()
+        connection.login(OWN_EMAIL, OWN_PASSWORD)
+        connection.sendmail(OWN_EMAIL, OWN_EMAIL, email_message)
 
 
 if __name__ == "__main__":
