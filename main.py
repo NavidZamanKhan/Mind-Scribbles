@@ -12,7 +12,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_argon2 import Argon2
 
 # Import your forms from the forms.py
-from forms import CreatePostForm, RegisterForm
+from forms import CreatePostForm, RegisterForm, LoginForm
 
 
 app = Flask(__name__)
@@ -24,7 +24,6 @@ argon2 = Argon2(app)
 # TODO: Configure Flask-Login
 
 
-# CREATE DATABASE
 class Base(DeclarativeBase):
     pass
 
@@ -46,8 +45,7 @@ class BlogPost(db.Model):
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
 
-# TODO: Create a User table for all your registered users.
-class user(UserMixin, db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String(100), unique=True)
@@ -59,11 +57,19 @@ with app.app_context():
     db.create_all()
 
 
-# TODO: Use Werkzeug to hash the user's password when creating a new user.
 @app.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+
+        result = db.session.execute(
+            db.select(User).where(User.email == form.email.data)
+        )
+        user = result.scalar()
+        if user:
+            flash("You've already signed up with that email, log in instead!")
+            return redirect(url_for("login"))
+
         hash_and_salted_password = argon2.generate_password_hash(form.password.data)
         new_user = user(
             email=form.email.data,
@@ -72,14 +78,42 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
+
+        login_user(new_user)
         return redirect(url_for("get_all_posts"))
     return render_template("register.html", form=form)
 
 
-# TODO: Retrieve a user from the database based on their email.
-@app.route("/login")
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return db.get_or_404(User, user_id)
+
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        result = db.session.execute(db.select(User).where(User.email == email))
+        user = result.scalar()
+
+        if not user:
+            flash("This email does not exist, please try again.")
+            return redirect(url_for("login"))
+
+        elif not argon2.check_password_hash(user.password, password):
+            flash("Password incorrect, please try again.")
+
+        else:
+            login_user(user)
+            return redirect(url_for("get_all_posts"))
+
+    return render_template("login.html", form=form)
 
 
 @app.route("/logout")
